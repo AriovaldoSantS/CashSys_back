@@ -1,0 +1,5 @@
+DB_HOST=localhost
+DB_USER=AriSants
+DB_PASS=676600ari
+DB_NAME=ProjectCXFODA
+DB_CONN_LIMIT=10

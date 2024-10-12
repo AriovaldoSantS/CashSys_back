@@ -1,32 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db');
+const { openCash } = require('../controllers/opencash');
+const { closeCash } = require('../controllers/closecash');
+const validateOpenCash = require('../middlewares/validateOpenCash');
+const validateCloseCash = require('../middlewares/validateCloseCash');
 
-// Rota para abrir o caixa
-router.post('/abrir', (req, res) => {
-    const { id_usuario, valor_inicial } = req.body;
+// Rota para abrir o caixa com validação
+router.post('/abrir', validateOpenCash, openCash);
 
-    // Verificar se os campos obrigatórios estão presentes
-    if (!id_usuario || valor_inicial == null) {
-        return res.status(400).json({ error: 'ID do usuário e valor inicial são obrigatórios' });
-    }
-
-    // Verificar tipos de dados
-    if (typeof valor_inicial !== 'number' || valor_inicial < 0) {
-        return res.status(400).json({ error: 'Valor inicial deve ser um número positivo' });
-    }
-
-    // Inserir abertura de caixa
-    db.query(
-        'INSERT INTO caixa (id_usuario, valor_inicial, valor_final, status, data_abertura) VALUES (?, ?, 0, "aberto", NOW())',
-        [id_usuario, valor_inicial],
-        (err, results) => {
-            if (err) {
-                return res.status(500).json({ error: `Erro ao abrir caixa: ${err.message}` });
-            }
-            res.status(201).json({ message: 'Caixa aberto com sucesso', id_caixa: results.insertId });
-        }
-    );
-});
+// Rota para fechar o caixa com validação
+router.post('/fechar', validateCloseCash, closeCash);
 
 module.exports = router;

@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); // Conexão com o banco de dados
+const db = require('../../db'); // Conexão com o banco de dados
 
 // Buscar todos os produtos
 router.get('/', (req, res) => {
-    db.query('SELECT * FROM produtos', (err, results) => {
+    db.query('SELECT id_produto AS id, nome, preco_unitario AS price, quantidade_estoque AS stock, descricao FROM produtos', (err, results) => {
         if (err) {
             return res.status(500).send(`Erro ao buscar produtos: ${err.message}`);
         }

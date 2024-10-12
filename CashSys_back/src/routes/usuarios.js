@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db'); // Conexão com o banco de dados
+const db = require('../../db');
 
 // Buscar todos os usuários
 router.get('/', (req, res) => {
@@ -47,7 +47,11 @@ router.post('/login', (req, res) => {
             return res.status(401).send('Usuário ou senha incorretos');
         }
 
-        res.send('Login bem-sucedido');
+        const user = results[0]; // Primeiro resultado da consulta
+        res.json({
+            employeeName: user.nome, // Retorna o nome do funcionário
+            userId: user.id_usuario, // Pode adicionar outras informações se necessário
+        });
     });
 });
 
@@ -70,21 +74,6 @@ router.put('/:id', (req, res) => {
             return res.status(404).send('Usuário não encontrado');
         }
         res.send(`Usuário ID ${id} atualizado com sucesso`);
-    });
-});
-
-// Excluir usuário
-router.delete('/:id', (req, res) => {
-    const { id } = req.params;
-
-    db.query('DELETE FROM usuarios WHERE id_usuario = ?', [id], (err, results) => {
-        if (err) {
-            return res.status(500).send('Erro ao excluir usuário');
-        }
-        if (results.affectedRows === 0) {
-            return res.status(404).send('Usuário não encontrado');
-        }
-        res.send(`Usuário ID ${id} excluído com sucesso`);
     });
 });
 
