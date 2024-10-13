@@ -1,14 +1,12 @@
 const express = require('express');
-const router = express.Router();
 const { openCash } = require('../controllers/opencash');
 const { closeCash } = require('../controllers/closecash');
-const validateOpenCash = require('../middlewares/validateOpenCash');
-const validateCloseCash = require('../middlewares/validateCloseCash');
+const router = express.Router();
 
-// Rota para abrir o caixa com validação
-router.post('/abrir', validateOpenCash, openCash);
+// Rota para abrir o caixa
+router.post('/abrir', openCash);
 
-// Rota para fechar o caixa com validação
-router.post('/fechar', validateCloseCash, closeCash);
+// Rota para fechar o caixa
+router.post('/fechar', closeCash);
 
 module.exports = router;
