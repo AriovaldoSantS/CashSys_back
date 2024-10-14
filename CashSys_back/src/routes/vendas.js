@@ -1,9 +1,10 @@
-const express = require('express');
+import express from 'express';
+
 const router = express.Router();
 
 // Exemplo de rota de vendas (substitua por seu controlador de vendas)
-router.get('/', (req, res) => {
+router.get('/', (_req, res) => {
   res.send('Rota de vendas funcionando!');
 });
 
-module.exports = router;
+export default router;

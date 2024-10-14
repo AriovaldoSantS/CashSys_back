@@ -1,12 +1,12 @@
 const express = require('express');
-const { openCash } = require('../controllers/opencash');
-const { closeCash } = require('../controllers/closecash');
+const { blockSalesAndLogout } = require('../controllers/blockSalesAndLogout');
 const router = express.Router();
 
-// Rota para abrir o caixa
-router.post('/abrir', openCash);
+router.post('/fechar', (req, res) => {
+  // Chama a função de fechamento do caixa no controlador
+  closeCash(req, res);
+});
 
-// Rota para fechar o caixa
-router.post('/fechar', closeCash);
+router.post('/bloquear-vendas', blockSalesAndLogout);
 
 module.exports = router;

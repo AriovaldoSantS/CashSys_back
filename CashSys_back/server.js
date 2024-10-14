@@ -1,22 +1,25 @@
-const express = require('express');
-const cors = require('cors');
-const errorHandler = require('./src/middlewares/errorHandler');
-require('dotenv').config();  // Carregar variáveis de ambiente
+import cors from 'cors';
+import dotenv from 'dotenv';
+import express from 'express';
+import errorHandler from './src/middlewares/errorHandler.js';
+
+// Carregar variáveis de ambiente
+dotenv.config();
 
 // Inicialize a aplicação
 const app = express();
 
-// Permite CORS para todas as origens (ou especifique uma origem específica)
+// Permite CORS para todas as origens
 app.use(cors());
 
-// Middleware para processar JSON no corpo das requisições
-app.use(express.json());  // Usando express.json() no lugar do body-parser
+// Middleware para processar JSON
+app.use(express.json());
 
 // Importar rotas
-const caixaRoutes = require('./src/routes/caixa');
-const vendasRoutes = require('./src/routes/vendas');
-const usuariosRoutes = require('./src/routes/usuarios');
-const produtosRoutes = require('./src/routes/produtos');
+import caixaRoutes from './src/routes/caixa.js';
+import produtosRoutes from './src/routes/produtos.js';
+import usuariosRoutes from './src/routes/usuarios.js';
+import vendasRoutes from './src/routes/vendas.js';
 
 // Usar as rotas do projeto
 app.use('/api/caixa', caixaRoutes);
